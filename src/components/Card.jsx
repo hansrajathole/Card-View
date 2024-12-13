@@ -1,5 +1,8 @@
-import React from "react";
+
+import React, { useState } from "react";
 import View from "./View";
+
+
 
 const Card = () => {
   const data = [
@@ -78,12 +81,16 @@ const Card = () => {
     },
   ];
 
-  const view =  function(){
-    // const [Buy, setBuy] = useState(Done)
 
-    alert("ho rha hai ")
-  } 
 
+  const bui = function () {
+    alert("Purchase successful!");
+  };
+  const req = function () {
+    alert("requist to product");
+  };
+
+  
   return (
     <div className=" h-full w-full flex items-center justify-center gap-4 flex-wrap p-5">
       {data.map((elem,indx)=>(
@@ -104,7 +111,8 @@ const Card = () => {
             <h1 className="font-semibold text-xl">${elem.price}</h1>
             <h1 className={`px-3 py-1.5  font-semibold rounded ${elem.Available?'bg-blue-400 cursor-pointer':'bg-red-400 font-medium opacity-80 pointer-events-none'}`}>{elem.Available?'Available': 'Currently Unavailable'}</h1>
           </div>
-          <button onClick={view} className="w-full py-1 bg-green-400 mt-2 rounded font-semibold text-lg hover:bg-green-600 ease-linear duration-150">{elem.Available?'Buy':'Request'}</button>
+          <button onClick={()=>{elem.Available ? bui() : req()}}
+               className="w-full py-1 bg-green-400 mt-2 rounded font-semibold text-lg hover:bg-green-600 ease-linear duration-150 active:scale-95">{elem.Available?'Buy':'Request'}</button>
         </div>
       </div>
       ))}
