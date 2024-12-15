@@ -13,7 +13,8 @@ const Card = () => {
       discription:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, vero.",
       price : 3.5,
-      Available : true  
+      Available : true,
+      card : true  
 
     },
     {
@@ -23,7 +24,8 @@ const Card = () => {
       discription:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, vero.",
         price : 10.4,
-        Available : true 
+        Available : true, 
+        card : true
     },
     {
       Name: "BoAt Headset",
@@ -32,7 +34,8 @@ const Card = () => {
       discription:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, vero.",
         price : 14.3,
-        Available : false 
+        Available : false ,
+        card : false
     },
     {
       Name: "Noice Smart Watch",
@@ -41,7 +44,9 @@ const Card = () => {
       discription:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, vero.",
         price : 2.5,
-        Available : true 
+        Available : true ,
+        card : true
+
     },
     {
       Name: "Apple pad",
@@ -50,7 +55,8 @@ const Card = () => {
       discription:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, vero.",
         price : 8.4,
-        Available : false
+        Available : false,
+        card : false
     },
     {
       Name: "Smart Watch ",
@@ -59,7 +65,8 @@ const Card = () => {
       discription:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, vero.",
         price : 73.5, 
-        Available : false
+        Available : false,
+        card : false
     },
     {
       Name: "Air Pots",
@@ -68,7 +75,8 @@ const Card = () => {
       discription:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, vero.",
         price : 56.5, 
-        Available : true
+        Available : true,
+        card : true
     },
     {
       Name: "Adidas ",
@@ -77,23 +85,41 @@ const Card = () => {
       discription:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, vero.",
         price : 23.8, 
-        Available : false
+        Available : false,
+        card : false
     },
   ];
 
 
+  const [realData, setrealData] = useState(data)
+  const [card, setcard] = useState([0])
+  const [requ, setrequ] = useState([0])
 
-  const bui = function () {
-    alert("Purchase successful!");
-  };
-  const req = function () {
-    alert("requist to product");
+  const bui = function (index) {
+    setrealData((prev)=>{return prev.map((item,indx)=>{
+      if(indx=== index){
+        setcard(()=>([...card, 2]))
+          return {...item, card : !item.card}
+      }else{
+        return item
+      }
+    }
+    )})
   };
 
+  const req = function(){
+    setrequ(()=>([...requ,1]))
+  }
+  
   
   return (
-    <div className=" h-full w-full flex items-center justify-center gap-4 flex-wrap p-5">
-      {data.map((elem,indx)=>(
+   <div>
+     <div className="flex items-center justify-between gap-4 p-2 px-36 mt-3 text-3xl font-semibold">
+      <h1 className="bg-green-500 p-2 rounded-md">Card : {card} </h1>
+      <h1 className="bg-red-500 p-2 rounded-md ">Request : {requ}</h1>
+     </div>
+     <div className=" h-full w-full flex items-center justify-center gap-4 flex-wrap p-4">
+      {realData.map((elem,indx)=>(
       <div className="h-[450px] w-[300px] bg-slate-200 rounded-md p-2 overflow-hidden">
         <div className="h-[50%] w-full bg-yellow-300 rounded-md overflow-hidden">
           <img
@@ -111,12 +137,13 @@ const Card = () => {
             <h1 className="font-semibold text-xl">${elem.price}</h1>
             <h1 className={`px-3 py-1.5  font-semibold rounded ${elem.Available?'bg-blue-400 cursor-pointer':'bg-red-400 font-medium opacity-80 pointer-events-none'}`}>{elem.Available?'Available': 'Currently Unavailable'}</h1>
           </div>
-          <button onClick={()=>{elem.Available ? bui() : req()}}
-               className="w-full py-1 bg-green-400 mt-2 rounded font-semibold text-lg hover:bg-green-600 ease-linear duration-150 active:scale-95">{elem.Available?'Buy':'Request'}</button>
+          <button onClick={()=>elem.card? bui(indx): req()}
+               className="w-full py-1 bg-green-400 mt-2 rounded font-semibold text-lg hover:bg-green-600 ease-linear duration-150 active:scale-95">{elem.Available && elem.card ?'Add to Card':'Request'}</button>
         </div>
       </div>
       ))}
     </div>
+   </div>
   );
 };
 
