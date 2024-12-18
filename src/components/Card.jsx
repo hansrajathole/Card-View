@@ -92,35 +92,29 @@ const Card = () => {
 
 
   const [realData, setrealData] = useState(data)
-  const [card, setcard] = useState([0])
-  const [requ, setrequ] = useState([0])
 
-  const bui = function (index) {
-    setrealData((prev)=>{return prev.map((item,indx)=>{
-      if(indx=== index){
-        setcard(()=>([...card, 2]))
-          return {...item, card : !item.card}
-      }else{
-        return item
-      }
-    }
-    )})
-  };
-
-  const req = function(){
-    setrequ(()=>([...requ,1]))
+  const HandleClick = (indx)=>{
+     setrealData((prev)=>{return prev.map((value,number)=>{
+        if(number === indx) return {...value, Available : !value.Available}
+        return value
+     })})
+      
   }
+ 
   
   
   return (
    <div>
      <div className="flex items-center justify-between gap-4 p-2 px-36 mt-3 text-3xl font-semibold">
-      <h1 className="bg-green-500 p-2 rounded-md">Card : {card} </h1>
-      <h1 className="bg-red-500 p-2 rounded-md ">Request : {requ}</h1>
+      <h1 className=" p-2 rounded-md text-6xl italic">Product</h1>
+      <div className="bg-red-500 p-2 px-4 rounded-md flex gap-2 text-2xl">
+        <h1 >To Card : </h1>
+        <h1>{realData.filter(item=>item.Available).length}</h1>
+      </div>
      </div>
-     <div className=" h-full w-full flex items-center justify-center gap-4 flex-wrap p-4">
+     <div  className=" h-full w-full flex items-center justify-center gap-4 flex-wrap p-4">
       {realData.map((elem,indx)=>(
-      <div className="h-[450px] w-[300px] bg-slate-200 rounded-md p-2 overflow-hidden">
+      <div key={indx} className="h-[450px] w-[300px] bg-slate-200 rounded-md p-2 overflow-hidden">
         <div className="h-[50%] w-full bg-yellow-300 rounded-md overflow-hidden">
           <img
             className="h-full w-full object-cover"
@@ -128,17 +122,18 @@ const Card = () => {
             alt=""
           />
         </div>
-        <div className="h-[48%] w-full mt-2 p-2">
+        <div className=" w-full mt-2 p-2">
           <h1 className="text-2xl font-semibold">{elem.Name}</h1>
           <p className="mt-2">
             {elem.discription}
           </p>
           <div className="flex justify-between items-center mt-2 ">
             <h1 className="font-semibold text-xl">${elem.price}</h1>
-            <h1 className={`px-3 py-1.5  font-semibold rounded ${elem.Available?'bg-blue-400 cursor-pointer':'bg-red-400 font-medium opacity-80 pointer-events-none'}`}>{elem.Available?'Available': 'Currently Unavailable'}</h1>
+            
           </div>
-          <button onClick={()=>elem.card? bui(indx): req()}
-               className="w-full py-1 bg-green-400 mt-2 rounded font-semibold text-lg hover:bg-green-600 ease-linear duration-150 active:scale-95">{elem.Available && elem.card ?'Add to Card':'Request'}</button>
+          <button
+              onClick={()=>HandleClick(indx)}
+               className={`w-full py-1 ${elem.Available?"bg-teal-500 hover:bg-teal-600 ease-linear duration-150":"bg-green-400 hover:bg-green-600 ease-linear duration-150"} mt-2 rounded font-semibold text-lg active:scale-95`}>{elem.Available === false ?'Add to Card':'Added'}</button>
         </div>
       </div>
       ))}
