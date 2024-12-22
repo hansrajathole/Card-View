@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import View from "./View";
-import CardItem from "./CardItem";
 import { IoEar } from "react-icons/io5";
 
 const Card = () => {
@@ -112,6 +111,7 @@ const Card = () => {
     setcardData((prev) => {
       if (elem.Available) {
         return prev.filter((item) => item.Name !== elem.Name);
+        // return [...prev]
       } else {
         return [...prev, { ...elem, Available: true }];
       }
